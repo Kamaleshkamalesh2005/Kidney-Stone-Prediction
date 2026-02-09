@@ -1,347 +1,239 @@
-# Kidney Stone Detection Project - Installation Guide
-## Complete Setup Instructions
+# 📦 Installation Guide
 
-### 🚀 Quick Start
+## Kidney Stone Detection System
 
-1. **Clone the repository:**
+---
+
+## 🚀 Quick Installation
+
 ```bash
-git clone <repository-url>
-cd kidney_stone_detection_project
+# 1. Clone the repository
+git clone https://github.com/jagandevloper/Mini-.git
+cd Mini-
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run the application
+python run.py
 ```
 
-2. **Create virtual environment:**
-```bash
-# Using conda (recommended)
-conda create -n kidney_stone python=3.9
-conda activate kidney_stone
+---
 
-# Or using venv
-python -m venv kidney_stone_env
-source kidney_stone_env/bin/activate  # Linux/Mac
-# or
-kidney_stone_env\Scripts\activate  # Windows
-```
+## 📋 System Requirements
 
-3. **Install dependencies:**
+### Minimum Requirements
+| Component | Requirement |
+|-----------|-------------|
+| **Python** | 3.8 or higher |
+| **RAM** | 8 GB |
+| **Storage** | 2 GB free space |
+| **OS** | Windows 10/11, macOS, Linux |
+
+### Recommended (for GPU)
+| Component | Requirement |
+|-----------|-------------|
+| **Python** | 3.10 or higher |
+| **RAM** | 16 GB |
+| **GPU** | NVIDIA RTX series |
+| **CUDA** | 11.8 or higher |
+| **Storage** | 5 GB free space |
+
+---
+
+## 🔧 Detailed Installation
+
+### Option 1: Using pip (Simplest)
+
 ```bash
+# Clone repository
+git clone https://github.com/jagandevloper/Mini-.git
+cd Mini-
+
+# Upgrade pip
+pip install --upgrade pip
+
+# Install all dependencies
 pip install -r requirements.txt
 ```
 
-4. **Prepare your dataset:**
-   - Place KUB X-ray images in `data/train/images/`, `data/valid/images/`, `data/test/images/`
-   - Place corresponding YOLOv8 format labels in respective `labels/` folders
-   - Update `data/data.yaml` with your dataset paths
+### Option 2: Using Virtual Environment (Recommended)
 
-5. **Train the model:**
-```bash
-python scripts/train.py --config data/data.yaml --model-size nano
+**Windows:**
+```powershell
+# Clone repository
+git clone https://github.com/jagandevloper/Mini-.git
+cd Mini-
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+.\venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-### 📋 Detailed Installation
-
-#### System Requirements
-
-- **Python**: 3.8 or higher
-- **CUDA**: 11.0 or higher (for GPU acceleration)
-- **RAM**: 8GB minimum, 16GB recommended
-- **Storage**: 10GB free space
-- **OS**: Windows 10/11, macOS 10.15+, or Ubuntu 18.04+
-
-#### Step-by-Step Installation
-
-##### 1. Environment Setup
-
-**Option A: Using Conda (Recommended)**
+**macOS / Linux:**
 ```bash
-# Create conda environment
-conda create -n kidney_stone python=3.9 -y
-conda activate kidney_stone
+# Clone repository
+git clone https://github.com/jagandevloper/Mini-.git
+cd Mini-
 
-# Install PyTorch with CUDA support
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Option 3: Using Conda
+
+```bash
+# Clone repository
+git clone https://github.com/jagandevloper/Mini-.git
+cd Mini-
+
+# Create conda environment
+conda create -n kidney-stone python=3.10 -y
+conda activate kidney-stone
+
+# Install PyTorch with CUDA
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia -y
 
 # Install other dependencies
 pip install -r requirements.txt
 ```
 
-**Option B: Using pip**
+---
+
+## ✅ Verify Installation
+
+Run these commands to verify everything is installed correctly:
+
 ```bash
-# Create virtual environment
-python -m venv kidney_stone_env
-source kidney_stone_env/bin/activate  # Linux/Mac
-# or
-kidney_stone_env\Scripts\activate  # Windows
+# Check Python version
+python --version
 
-# Upgrade pip
-pip install --upgrade pip
+# Check PyTorch installation
+python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 
-# Install PyTorch (choose appropriate version)
+# Check CUDA availability
+python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+
+# Check GPU name (if available)
+python -c "import torch; print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"None\"}')"
+
+# Check YOLOv8 installation
+python -c "from ultralytics import YOLO; print('YOLOv8: OK')"
+
+# Check Flask installation
+python -c "import flask; print(f'Flask: {flask.__version__}')"
+```
+
+Expected output (with GPU):
+```
+PyTorch: 2.x.x
+CUDA available: True
+GPU: NVIDIA GeForce RTX 4050 Laptop GPU
+YOLOv8: OK
+Flask: 3.x.x
+```
+
+---
+
+## 🚀 Running the Application
+
+### Development Mode
+```bash
+python run.py
+```
+
+### With Custom Port
+```bash
+python run.py --port 8080
+```
+
+### With Debug Mode
+```bash
+python run.py --debug
+```
+
+### Production Mode (using Gunicorn)
+```bash
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 "src.app.main:app"
+```
+
+---
+
+## 📁 Project Structure After Installation
+
+```
+Mini-/
+├── run.py              # Entry point
+├── requirements.txt    # Dependencies
+├── src/
+│   └── app/
+│       ├── main.py     # Flask app
+│       ├── models/
+│       │   └── best.pt # YOLOv8 model
+│       ├── templates/
+│       ├── static/
+│       └── utils/
+├── docs/
+├── scripts/
+└── tests/
+```
+
+---
+
+## ❓ Troubleshooting
+
+### Issue: CUDA not detected
+```bash
+# Reinstall PyTorch with CUDA
+pip uninstall torch torchvision torchaudio
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-
-# Install other dependencies
-pip install -r requirements.txt
 ```
 
-##### 2. Verify Installation
-
+### Issue: Module not found
 ```bash
-# Test PyTorch installation
-python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}')"
-
-# Test YOLOv8 installation
-python -c "from ultralytics import YOLO; print('YOLOv8 installed successfully')"
-
-# Test OpenCV installation
-python -c "import cv2; print(f'OpenCV version: {cv2.__version__}')"
+# Reinstall all dependencies
+pip install -r requirements.txt --force-reinstall
 ```
 
-##### 3. Dataset Preparation
-
-**Dataset Structure:**
-```
-data/
-├── train/
-│   ├── images/          # Training images (.jpg, .png)
-│   └── labels/          # YOLOv8 format labels (.txt)
-├── valid/
-│   ├── images/          # Validation images
-│   └── labels/          # Validation labels
-├── test/
-│   ├── images/          # Test images
-│   └── labels/          # Test labels
-└── data.yaml            # Dataset configuration
-```
-
-**Label Format (YOLOv8):**
-```
-# Each line in label file: class_id center_x center_y width height
-# All coordinates normalized (0-1)
-0 0.5 0.5 0.1 0.1
-```
-
-**data.yaml Configuration:**
-```yaml
-train: data/train/images
-val: data/valid/images
-test: data/test/images
-
-nc: 1
-names: ['kidney_stone']
-```
-
-##### 4. Model Training
-
-**Basic Training:**
+### Issue: Port already in use
 ```bash
-python scripts/train.py --config data/data.yaml --model-size nano
+# Use a different port
+python run.py --port 8080
 ```
 
-**Advanced Training Options:**
+### Issue: Permission denied (Linux/macOS)
 ```bash
-python scripts/train.py \
-    --config data/data.yaml \
-    --model-size nano \
-    --device cuda \
-    --epochs 100 \
-    --batch-size 16 \
-    --learning-rate 0.01 \
-    --patience 50
+# Use sudo or change permissions
+chmod +x run.py
+python run.py
 ```
 
-##### 5. Model Evaluation
+---
 
-```bash
-python scripts/evaluate.py \
-    --model runs/kidney_stone_detection_*/weights/best.pt \
-    --config data/data.yaml \
-    --split test
-```
+## 🔗 Useful Links
 
-##### 6. Real-time Inference
+- **Repository:** [github.com/jagandevloper/Mini-](https://github.com/jagandevloper/Mini-)
+- **PyTorch:** [pytorch.org](https://pytorch.org)
+- **Ultralytics:** [docs.ultralytics.com](https://docs.ultralytics.com)
+- **Flask:** [flask.palletsprojects.com](https://flask.palletsprojects.com)
 
-**Webcam Detection:**
-```bash
-python scripts/real_time.py \
-    --model runs/kidney_stone_detection_*/weights/best.pt \
-    --source 0 \
-    --device cuda
-```
+---
 
-**Video File Processing:**
-```bash
-python scripts/real_time.py \
-    --model runs/kidney_stone_detection_*/weights/best.pt \
-    --source path/to/video.mp4 \
-    --save-output
-```
+## 📞 Support
 
-##### 7. Explainability Analysis
-
-```bash
-python scripts/explainability.py \
-    --model runs/kidney_stone_detection_*/weights/best.pt \
-    --images data/test/images/*.jpg \
-    --output-dir explainability_results
-```
-
-### 🔧 Troubleshooting
-
-#### Common Issues and Solutions
-
-**Issue 1: CUDA Out of Memory**
-```bash
-# Solution: Reduce batch size
-python scripts/train.py --batch-size 8  # Instead of 16
-
-# Or use CPU
-python scripts/train.py --device cpu
-```
-
-**Issue 2: Import Errors**
-```bash
-# Solution: Reinstall dependencies
-pip uninstall ultralytics
-pip install ultralytics
-
-# Or install specific version
-pip install ultralytics==8.0.0
-```
-
-**Issue 3: Dataset Loading Errors**
-```bash
-# Check data.yaml paths
-python -c "import yaml; print(yaml.safe_load(open('data/data.yaml')))"
-
-# Verify image and label files exist
-ls data/train/images/ | wc -l
-ls data/train/labels/ | wc -l
-```
-
-**Issue 4: Webcam Not Working**
-```bash
-# Test camera access
-python -c "import cv2; cap = cv2.VideoCapture(0); print('Camera available:', cap.isOpened())"
-
-# Try different camera indices
-python scripts/real_time.py --source 1  # Try camera 1
-```
-
-#### Performance Optimization
-
-**GPU Optimization:**
-```bash
-# Use mixed precision training
-python scripts/train.py --half
-
-# Use TensorRT optimization (if available)
-python scripts/train.py --trt
-```
-
-**CPU Optimization:**
-```bash
-# Use multiple workers
-python scripts/train.py --workers 8
-
-# Use smaller model
-python scripts/train.py --model-size nano
-```
-
-### 📊 Usage Examples
-
-#### Example 1: Complete Training Pipeline
-
-```bash
-# 1. Train model
-python scripts/train.py --config data/data.yaml --model-size nano --epochs 100
-
-# 2. Evaluate model
-python scripts/evaluate.py --model runs/kidney_stone_detection_*/weights/best.pt
-
-# 3. Run explainability analysis
-python scripts/explainability.py --model runs/kidney_stone_detection_*/weights/best.pt --images data/test/images/*.jpg
-
-# 4. Test real-time detection
-python scripts/real_time.py --model runs/kidney_stone_detection_*/weights/best.pt --source 0
-```
-
-#### Example 2: Batch Processing
-
-```bash
-# Process entire test dataset
-python scripts/inference.py \
-    --model runs/kidney_stone_detection_*/weights/best.pt \
-    --dataset data/test/images \
-    --save-annotations \
-    --export-formats json csv
-```
-
-#### Example 3: Custom Configuration
-
-```bash
-# Train with custom parameters
-python scripts/train.py \
-    --config data/data.yaml \
-    --model-size nano \
-    --epochs 200 \
-    --batch-size 32 \
-    --learning-rate 0.005 \
-    --patience 100 \
-    --device cuda \
-    --project-name custom_kidney_stone
-```
-
-### 🐳 Docker Installation (Optional)
-
-**Dockerfile:**
-```dockerfile
-FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-
-CMD ["python", "scripts/train.py", "--config", "data/data.yaml"]
-```
-
-**Build and Run:**
-```bash
-# Build image
-docker build -t kidney-stone-detection .
-
-# Run container
-docker run --gpus all -v $(pwd)/data:/app/data kidney-stone-detection
-```
-
-### 📝 Additional Notes
-
-- **Memory Requirements**: Training requires 8-16GB RAM, inference requires 4-8GB RAM
-- **Storage**: Each training run creates ~2GB of logs and checkpoints
-- **GPU**: CUDA-compatible GPU recommended for training, optional for inference
-- **Dataset Size**: Minimum 100 images per class recommended for good performance
-
-### 🆘 Getting Help
-
-If you encounter issues:
-
+If you encounter any issues, please:
 1. Check the troubleshooting section above
-2. Review the logs in `training.log`, `evaluation.log`, etc.
-3. Verify your dataset format matches YOLOv8 requirements
-4. Ensure all dependencies are correctly installed
-5. Check GPU memory usage and reduce batch size if needed
-
-### 📚 Next Steps
-
-After successful installation:
-
-1. **Train your first model** using the provided dataset
-2. **Evaluate performance** using the evaluation script
-3. **Analyze explainability** with Grad-CAM visualizations
-4. **Test real-time detection** with webcam or video files
-5. **Customize parameters** for your specific use case
-
-For more detailed information, see the main README.md file.
-
-
+2. Open an issue on GitHub
+3. Include your Python version, OS, and error message
