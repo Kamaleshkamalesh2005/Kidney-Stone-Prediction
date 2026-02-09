@@ -50,16 +50,21 @@ timing_middleware = lambda f: f
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Get the base directory for this app module
+APP_DIR = Path(__file__).parent
+
 # Flask app configuration
-app = Flask(__name__)
+app = Flask(__name__, 
+            template_folder=str(APP_DIR / 'templates'),
+            static_folder=str(APP_DIR / 'static'))
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['RESULTS_FOLDER'] = 'static/results'
+app.config['UPLOAD_FOLDER'] = str(APP_DIR / 'uploads')
+app.config['RESULTS_FOLDER'] = str(APP_DIR / 'static' / 'results')
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff'}
 
 # Create directories
-Path(app.config['UPLOAD_FOLDER']).mkdir(exist_ok=True)
-Path(app.config['RESULTS_FOLDER']).mkdir(exist_ok=True)
+Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)
+Path(app.config['RESULTS_FOLDER']).mkdir(parents=True, exist_ok=True)
 
 # Global variables
 detector = None
