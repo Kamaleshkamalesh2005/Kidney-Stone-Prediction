@@ -145,6 +145,25 @@ python tests/test_app.py
 | CPU Inference | 80-150 ms |
 | mAP@0.5 | 0.85+ |
 
+## 🖼️ Output
+
+The system generates a comprehensive multi-level analysis for each processed KUB X-ray:
+
+### 1. Detection Results
+- **Bounding Boxes**: Precise localization of kidney stones with class labels.
+- **Confidence Scores**: Statistical probability of each detection.
+![Detection Results](docs/images/fig5_1_detection_results.png)
+
+### 2. Multi-Level Explainability
+- **Level 1: Grad-CAM Heatmaps**: Pixel-level visualization showing which areas the model focused on.
+- **Level 2: Region Analysis**: Contextual information about the stone's location.
+- **Level 3: Clinical Prognosis**: AI-driven severity assessment and treatment recommendations.
+![Explainability Analysis](docs/images/fig5_3_multi_level_explainability.png)
+
+### 3. Clinical Report
+- Summary of findings including stone count, size estimates, and anatomical localization.
+- Automated clinical decision support suggestions based on the detection.
+
 
 ## 📄 License
 
