@@ -75,7 +75,7 @@ Light-Weight-Explainable-Model-For-Kidney-Stone-Detection-using-KUB-X-Rays/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/jagandevloper/Light-Weight-Explainable-Model-For-Kidney-Stone-Detection-using-KUB-X-Rays.git
+git clone [https://github.com/Kamaleshkamalesh2005/Kidney-Stone-Prediction.git
 cd Light-Weight-Explainable-Model-For-Kidney-Stone-Detection-using-KUB-X-Rays
 ```
 
